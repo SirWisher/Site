@@ -35,9 +35,8 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 	for _, item := range books {
 		if item.ID == params["id"] {
 			json.NewEncoder(w).Encode(item)
-			break
+			return
 		}
-		return
 	}
 	json.NewEncoder(w).Encode(&Book{})
 }
@@ -86,6 +85,7 @@ func main() {
 
 	books = append(books, Book{ID: "1", Isbn: "438227", Title: "Book One", Author: &Author{Firstname: "John", Lastname: "Doe"}})
 	books = append(books, Book{ID: "2", Isbn: "454555", Title: "Book Two", Author: &Author{Firstname: "Steve", Lastname: "Smith"}})
+	books = append(books, Book{ID: "3", Isbn: "424555", Title: "Book Three", Author: &Author{Firstname: "Hey", Lastname: "Smoth"}})
 
 	r.HandleFunc("/books", createBook).Methods("POST")
 	r.HandleFunc("/books", getBooks).Methods("GET")
